@@ -19,9 +19,19 @@ class RoomList extends Component {
     });
   }
 
+  createRoom() {
+    
+  }
+
   render() {
+    let val;
     return(
-      <div>{this.state.rooms.map( (room) => <p>{room.name}</p> )}</div>
+      <div>
+        <form>
+          <input type="text" value={val}>
+          <input typr="submut" value={this.setState{( room: val )}>
+        </form>
+      </div>
     );
   }
 }
