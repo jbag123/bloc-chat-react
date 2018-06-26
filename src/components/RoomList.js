@@ -5,8 +5,7 @@ class RoomList extends Component {
     super(props);
 
     this.state = {
-      name: undefined,
-      roomName: undefined,
+      roomName: '',
       rooms: []
     };
 
@@ -23,20 +22,20 @@ class RoomList extends Component {
     });
   }
 
-  handleChange({ target }) {
+  handleChange(e) {
     this.setState({
-      [target.name]: target.value
+      [e.target.name]: e.target.value
     });
   }
 
   createRoom(e) {
     e.preventDefault();
-    this.roomsRef.push({
-      name: this.state.roomName
-    });
+    const item = {
+      roomName: this.state.roomName
+    }
+    this.roomsRef.push(item);
     this.setState({
-      name: "",
-      roomName: ""
+      roomName: ''
     })
   }
 
@@ -44,11 +43,10 @@ class RoomList extends Component {
     return(
       <div>
         <form>
-          <input type="text" name="name" value={this.state.name} onChange={ () => this.handleChange } />
-          <input type="text" name="roomName" value={this.state.roomName} onChange={ () => this.handleChange } />
+          <input type="text" name="roomName" value={this.state.roomName} onChange={this.handleChange } />
           <input type="submit" onClick={(e) => this.createRoom(e)} />
         </form>
-        {this.state.rooms.map( room => <p>{room.key}</p> )}
+        {this.state.rooms.map( (room, index) => <p key={index}>{room.key}</p> )}
       </div>
     );
   }
