@@ -5,8 +5,8 @@ class RoomList extends Component {
     super(props);
 
     this.state = {
-      name: undefined,
-      roomName: undefined,
+      room: '',
+      roomName: '',
       rooms: []
     };
 
@@ -17,26 +17,28 @@ class RoomList extends Component {
 
   componentDidMount() {
     this.roomsRef.on('child_added', snapshot => {
+      console.log(snapshot.val());
       const room = snapshot.val();
       room.key = snapshot.key
       this.setState({ rooms: this.state.rooms.concat( room ) });
     });
   }
 
-  handleChange({ target }) {
+  handleChange(e) {
     this.setState({
-      [target.name]: target.value
+      [e.target.name]: e.target.value
     });
   }
 
   createRoom(e) {
     e.preventDefault();
-    this.roomsRef.push({
-      name: this.state.roomName
-    });
+    const item = {
+      room: this.state.room,
+      roomName: this.state.roomName
+    }
+    this.roomsRef.push(item);
     this.setState({
-      name: "",
-      roomName: ""
+      roomName: ''
     })
   }
 
@@ -44,11 +46,11 @@ class RoomList extends Component {
     return(
       <div>
         <form>
-          <input type="text" name="name" value={this.state.name} onChange={ () => this.handleChange } />
-          <input type="text" name="roomName" value={this.state.roomName} onChange={ () => this.handleChange } />
+          <input type="text" name="room" value={this.state.room} onChange={this.handleChange} />
+          <input type="text" name="roomName" value={this.state.roomName} onChange={this.handleChange} />
           <input type="submit" onClick={(e) => this.createRoom(e)} />
         </form>
-        {this.state.rooms.map( room => <p>{room.key}</p> )}
+        {this.state.rooms.map( (r,index) => <div key={index}><p>{r.room} - {r.roomName}</p></div> )}
       </div>
     );
   }
