@@ -5,23 +5,72 @@ class MessageList extends Component {
     super(props);
 
     this.state = {
-      messageNumber: '',
-      messages = []
+      username: "",
+      content: "",
+      sentAt: "",
+      roomId: "",
+      allMessages: [],
+      displayedMessages: []
     }
 
+    this.messageRef = this.props.firebase.database().ref('messages');
+    this.handleChange = this.handleChange.bind(this);
+    this.createMessage = this.createMessage.bind(this);
   }
 
   componentDidMount() {
-    this.roomsRef.on('child_added', snapshot => {
+    this.messageRef.on('child_added', snapshot => {
       const message = snapshot.val();
-      message.key = snapshot.key
-      this.setState({ messages: this.state.messages.concat( message ) });
+      message.key = snapshot.key;
+      this.setState({ allMessages: this.state.allMessages.concat( message ) });
+    });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.updateDisplayedMessages(nextProps.activeRoom);
+  }
+
+  handleChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  }
+
+  createMessage(e) {
+    e.preventDefault();
+    const item = {
+      username: this.state.username,
+      content: this.state.content,
+      sentAt: this.props.firebase.database.ServerValue.TIMESTAMP,
+      roomId: this.props.activeRoom.key
     }
+    this.messageRef.push(item)
+    this.setState({
+      username: "",
+      content: "",
+      sentAt: "",
+      roomId: ""
+    });
+  }
+
+  updateDisplayedMessages(activeRoom) {
+    if (!activeRoom) {
+      return
+    }
+    this.setState({ displayedMessages: this.state.allMessages.filter(m => m.roomId === activeRoom.key ) });
   }
 
   render() {
     return(
-
+      <div>
+        <form>
+          <input type="text" name="username" placeholder="Enter username" value={this.state.username} onChange={this.handleChange} />
+          <input type="text" name="content" placeholder="Enter message" value={this.state.content} onChange={this.handleChange} />
+          <input type="submit" onClick={(e) => this.createMessage(e)} />
+        </form>
+        {this.state.displayedMessages.map( (m,index) => <div key={index}><p>{m.username}</p></div> )}
+      </div>
     );
   }
 }
+export default MessageList;
