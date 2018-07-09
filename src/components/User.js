@@ -1,12 +1,6 @@
 import React, { Component } from 'react';
 
 class User extends Component {
-  constructor(props) {
-    super(props);
-    const provider = new this.props.firebase.auth.GoogleAuthProvider();
-    this.login = this.login.bind(this);
-    this.logout = this.logout.bind(this);
-  }
 
   componentDidMount() {
     this.props.firebase.auth().onAuthStateChanged( user => {
@@ -14,23 +8,22 @@ class User extends Component {
     });
   }
 
-  login() {
-  auth.signInWithPopup(provider)
-    .then((result) => {
-      const user = result.user;
-      this.setState({
-        user
-      });
-    });
-}
+  signIn() {
+    const provider = new this.props.firebase.auth.GoogleAuthProvider();
+    this.props.firebase.auth().signInWithPopup( provider );
+  }
+
+  signnOut() {
+    this.props.firebase.auth().signOut();
+  }
 
   render() {
     return(
       <div>
-        {this.state.user ?
-          <button onClick={this.logout}>Log Out</button>
+        {this.props.user === null ?
+          <button onClick={this.signIn}>Log In</button>
           :
-          <button onClick={this.login}>Log In</button>
+          <button onClick={this.signnOut}>Log Out</button>
         }
       </div>
     )
