@@ -21,9 +21,12 @@ class User extends Component {
     return(
       <div>
         {this.props.user === null ?
-          <button onClick={this.signIn}>Log In</button>
+          <button onClick={this.signIn.bind(this)}>Log In</button>
           :
-          <button onClick={this.signnOut}>Log Out</button>
+          <div>
+          <p>{this.props.user.displayName}</p>
+          <button onClick={this.signnOut.bind(this)}>Log Out </button>
+          </div>
         }
       </div>
     )
