@@ -39,7 +39,7 @@ class MessageList extends Component {
   createMessage(e) {
     e.preventDefault();
     const item = {
-      username: this.state.username,
+      username: this.props.user.displayName,
       content: this.state.content,
       sentAt: this.props.firebase.database.ServerValue.TIMESTAMP,
       roomId: this.props.activeRoom.key
@@ -64,7 +64,6 @@ class MessageList extends Component {
     return(
       <div>
         <form>
-          <input type="text" name="username" placeholder="Enter username" value={this.state.username} onChange={this.handleChange} />
           <input type="text" name="content" placeholder="Enter message" value={this.state.content} onChange={this.handleChange} />
           <input type="submit" onClick={(e) => this.createMessage(e)} />
         </form>
