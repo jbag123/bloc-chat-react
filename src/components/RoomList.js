@@ -39,6 +39,14 @@ class RoomList extends Component {
     })
   }
 
+  deleteRoom(e) {
+    e.preventDefault();
+    const item = {
+      roomName: this.props.activeRoom.room
+    }
+    this.roomsRef.child(item).remove();
+  }
+
   render() {
     return(
       <div>
@@ -46,6 +54,7 @@ class RoomList extends Component {
           <input type="text" name="roomName" placeholder="Enter room name" value={this.state.roomName} onChange={this.handleChange} />
           <input type="submit" onClick={(e) => this.createRoom(e)} />
         </form>
+        <button onClick={(e) => this.deleteRoom(e)}>Delete Active Room</button>
         {this.state.rooms.map( (r,index) => <div key={index}><p onClick={() => this.props.setRoom(r)}>{r.roomName}</p></div> )}
       </div>
     );
