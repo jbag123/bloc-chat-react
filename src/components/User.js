@@ -24,7 +24,7 @@ class User extends Component {
           <button onClick={this.signIn.bind(this)}>Log In</button>
           :
           <div>
-          <p>{this.props.user.displayName}</p>
+          <p>Current user: {this.props.user.displayName}</p>
           <button onClick={this.signnOut.bind(this)}>Log Out </button>
           </div>
         }
