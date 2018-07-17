@@ -58,6 +58,7 @@ class MessageList extends Component {
       return
     }
     this.setState({ displayedMessages: this.state.allMessages.filter(m => m.roomId === activeRoom.key ) });
+    console.lgo
   }
 
   render() {
@@ -67,7 +68,7 @@ class MessageList extends Component {
           <input type="text" name="content" placeholder="Enter message" value={this.state.content} onChange={this.handleChange} />
           <input type="submit" onClick={(e) => this.createMessage(e)} />
         </form>
-        {this.state.displayedMessages.map( (m,index) => <div key={index}><p>{m.username}</p></div> )}
+        {this.state.displayedMessages.map( (m,index) => <div key={index}><p>{m.content}</p></div> )}
       </div>
     );
   }
