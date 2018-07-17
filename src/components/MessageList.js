@@ -58,7 +58,6 @@ class MessageList extends Component {
       return
     }
     this.setState({ displayedMessages: this.state.allMessages.filter(m => m.roomId === activeRoom.key ) });
-    console.lgo
   }
 
   render() {

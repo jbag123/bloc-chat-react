@@ -39,11 +39,7 @@ class RoomList extends Component {
     })
   }
 
-  deleteRoom(e) {
-    e.preventDefault();
-    const item = {
-      roomName: this.props.activeRoom.room
-    }
+  deleteRoom(item) {
     this.roomsRef.child(item).remove();
   }
 
