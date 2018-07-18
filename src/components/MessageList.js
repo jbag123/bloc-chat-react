@@ -27,7 +27,7 @@ class MessageList extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.updateDisplayedMessages(nextProps.activeRoom);
+    this.setState({ displayedMessages: this.state.allMessages.filter(m => m.roomId === nextProps.activeRoom.key ) });
   }
 
   handleChange(e) {
@@ -53,21 +53,19 @@ class MessageList extends Component {
     });
   }
 
-  updateDisplayedMessages(activeRoom) {
-    if (!activeRoom) {
-      return
-    }
-    this.setState({ displayedMessages: this.state.allMessages.filter(m => m.roomId === activeRoom.key ) });
-  }
 
   render() {
     return(
       <div>
         <form>
           <input type="text" name="content" placeholder="Enter message" value={this.state.content} onChange={this.handleChange} />
+          {this.props.activeRoom ?
           <input type="submit" onClick={(e) => this.createMessage(e)} />
+          :
+          <p>There is no active room, please select</p>
+          }
         </form>
-        {this.state.displayedMessages.map( (m,index) => <div key={index}><p>{m.content}</p></div> )}
+        {this.state.displayedMessages.map( (m,index) => <div key={index}><p>Message: {m.content} - Room name: {this.props.activeRoom.roomName} - User name: {this.props.user.displayName}</p><p></p></div> )}
       </div>
     );
   }
