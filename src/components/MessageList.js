@@ -18,16 +18,21 @@ class MessageList extends Component {
     this.createMessage = this.createMessage.bind(this);
   }
 
+  scrollToLastMessage = () => {
+    this.bottomOfMessages.scrollIntoView({ behavior: "smooth" });
+  }
+
   componentDidMount() {
     this.messageRef.on('child_added', snapshot => {
       const message = snapshot.val();
       message.key = snapshot.key;
       this.setState({ allMessages: this.state.allMessages.concat( message ) });
+      this.setState({ displayedMessages: this.state.allMessages.filter(m => m.roomId === this.props.activeRoom.key ) }, () => this.scrollToLastMessage() );
     });
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({ displayedMessages: this.state.allMessages.filter(m => m.roomId === nextProps.activeRoom.key ) });
+    this.setState({ displayedMessages: this.state.allMessages.filter(m => m.roomId === nextProps.activeRoom.key ) }, () => this.scrollToLastMessage() );
   }
 
   handleChange(e) {
@@ -66,6 +71,7 @@ class MessageList extends Component {
           }
         </form>
         {this.state.displayedMessages.map( (m,index) => <div key={index}><p>Message: {m.content} - Room name: {this.props.activeRoom.roomName} - User name: {this.props.user.displayName}</p><p></p></div> )}
+        <div ref={(thisDiv) => this.bottomOfMessages = thisDiv}></div>
       </div>
     );
   }
