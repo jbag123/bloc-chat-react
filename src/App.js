@@ -22,7 +22,9 @@ class App extends Component {
 
     this.state = {
       activeRoom: '',
-      user: null
+      user: null,
+      allMessages: [],
+      displayedMessages: []
     };
   }
 
@@ -46,6 +48,8 @@ class App extends Component {
          firebase={firebase}
          activeRoom={this.state.activeRoom}
          user={this.state.user}
+         allMessages={this.state.allMessages}
+         displayedMessages={this.state.displayedMessages}
          />
         <User
          firebase={firebase}

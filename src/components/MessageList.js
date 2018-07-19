@@ -70,7 +70,7 @@ class MessageList extends Component {
           <p>There is no active room, please select</p>
           }
         </form>
-        {this.state.displayedMessages.map( (m,index) => <div key={index}><p>Message: {m.content} - Room name: {this.props.activeRoom.roomName} - User name: {this.props.user.displayName}</p><p></p></div> )}
+        {this.state.allMessages.filter(m => m.roomId === this.props.activeRoom.key ).map( (m,index) => <p key={index}>Message: {m.content}<br />Room: {this.props.activeRoom.roomName}<br />Username: {this.props.user.displayName}</p>)};
         <div ref={(thisDiv) => this.bottomOfMessages = thisDiv}></div>
       </div>
     );
