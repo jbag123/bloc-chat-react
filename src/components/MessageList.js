@@ -27,13 +27,9 @@ class MessageList extends Component {
       const message = snapshot.val();
       message.key = snapshot.key;
       this.setState({ allMessages: this.state.allMessages.concat( message ) });
-      this.setState({ displayedMessages: this.state.allMessages.filter(m => m.roomId === this.props.activeRoom.key ) }, () => this.scrollToLastMessage() );
     });
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({ displayedMessages: this.state.allMessages.filter(m => m.roomId === nextProps.activeRoom.key ) }, () => this.scrollToLastMessage() );
-  }
 
   handleChange(e) {
     this.setState({
