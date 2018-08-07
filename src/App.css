@@ -30,3 +30,9 @@
 p, form {
   padding: 20px;
 }
+
+#root {
+  width: 60%;
+  margin: 0 auto;
+  background-color: red;
+}

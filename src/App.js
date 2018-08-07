@@ -22,9 +22,7 @@ class App extends Component {
 
     this.state = {
       activeRoom: '',
-      user: null,
-      allMessages: [],
-      displayedMessages: []
+      user: null
     };
   }
 
