@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 class RoomList extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       roomName: '',
       newRoomName: null,
@@ -13,6 +12,20 @@ class RoomList extends Component {
     this.roomsRef = this.props.firebase.database().ref('rooms');
     this.handleChange = this.handleChange.bind(this);
     this.createRoom = this.createRoom.bind(this);
+    this.compEl = React.createRef();
+  }
+
+  componentWillMount() {
+    // Get the components DOM node
+    var elem = this.compEl.current;
+    // Set the opacity of the element to 0
+    elem.style.opacity = 0;
+    window.requestAnimationFrame(function() {
+      // Now set a transition on the opacity
+      elem.style.transition = "opacity 2s";
+      // and set the opacity to 1
+      elem.style.opacity = 1;
+    });
   }
 
   componentDidMount() {
@@ -55,6 +68,7 @@ class RoomList extends Component {
   }
 
 
+
   render() {
     return(
       <div>
@@ -64,14 +78,15 @@ class RoomList extends Component {
           <input type="submit"  onClick={(e) => this.createRoom(e)} />
         </form>
         {this.state.rooms.map( (r,index) =>
-        <div key={index}>
-        <p onClick={() => this.props.setRoom(r)}>{r.roomName}</p>
-        <button onClick={() => this.deleteRoom(r)}>Delete Room</button>
-        <form>
-        <input type="text" name="newRoomName" placeholder="rename room" value={this.state.newRoomName} onChange={this.handleChange} />
-        <input type="submit"  onClick={() =>this.renameRoom(r)} />
-        </form>
-        </div> )}
+          <div key={index} ref={this.compEl} className="message-block">
+            <p className="point" onClick={() => this.props.setRoom(r)} >Room Name: {r.roomName}</p>
+            <form className="message-form" >
+            <button onClick={() => this.deleteRoom(r)}>Delete Room</button>
+            <input type="text" name="newRoomName" placeholder="rename room" value={r.newRoomName} onChange={this.handleChange} />
+            <input type="submit"  onClick={() =>this.renameRoom(r)} />
+            </form>
+          </div>
+        )}
       </div>
     );
   }

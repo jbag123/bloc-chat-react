@@ -1,3 +1,65 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,700|Roboto');
+
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: Montserrat;
+}
+
+p, input {
+  font-family: Montserrat;
+}
+
+p, form {
+  line-height: 4em;
+  margin: 0;
+  padding: 0 1em;
+}
+
+form {
+  padding: 0 1em;
+}
+
+#root {
+  width: 60%;
+  margin: 0 auto;
+}
+h1 {
+  margin: 0;
+  padding: 1em 1.5em 1em 1rem;
+  background: white;
+  text-transform: uppercase;
+  font-size: 1.5em;
+  display: inline-block;
+}
+
+input {
+  font-size: 1em;
+}
+
+input[type="text"] {
+  padding: .5em;
+}
+
+input[type="submit"], button {
+  margin-left: .5em;
+  padding: 0em;
+  border: none;
+  background: none;
+}
+
+button {
+  padding: 0em 1em 0 .5em;
+  font-size: 1em;
+  border: none;
+  background: none;
+}
+
 .App {
   text-align: center;
 }
@@ -27,12 +89,19 @@
   to { transform: rotate(360deg); }
 }
 
-p, form {
-  padding: 20px;
+.message-block {
+  display: flex;
+  justify-content: space-between;
+  height: 4em;
 }
 
-#root {
-  width: 60%;
-  margin: 0 auto;
-  background-color: red;
+.message-block:hover {
+  border-left: 2px solid grey;
+}
+
+.message-form {
+  float: right;
+}
+.point {
+  background-color: #efefef;
 }
